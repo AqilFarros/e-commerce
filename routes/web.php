@@ -9,8 +9,15 @@ use App\Http\Controllers\Admin\ProductGalleryController;
 use App\Http\Controllers\Admin\TransactionController;
 
 Route::get('/', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'index']);
+Route::get('/detail-product/{slug}', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'detailProduct'])->name('detail.product');
+Route::get('detail-category/{slug}', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'detailCategory'])->name('detail.category');
 
 Auth::routes();
+
+Route::middleware('auth')->group(function() {
+    Route::get('/cart', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'cart'])->name('cart');
+    Route::post('/add-to-cart/{id}', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'addToCart'])->name('add.cart');
+});
 
 Route::name('admin.')->prefix('admin')->middleware('admin')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
