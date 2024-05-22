@@ -55,8 +55,9 @@
                         <div class="flex flex-start flex-wrap items-center mb-4 -mx-4" data-row="1">
                             <div class="px-4 flex-none">
                                 <div class="" style="width: 90px; height: 90px">
-                                    <img src="{{ $item->product->product_galleries()->exists() ? url('storage/product/gallery',$item->product->product_galleries->first()->image) : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN88B8AAsUB4ZtvXtIAAAAASUVORK5CYII=' }}"
-                                alt="{{ $item->name }}" class="w-full h-full object-cover object-center rounded-xl" />
+                                    <img src="{{ $item->product->product_galleries()->exists() ? url('storage/product/gallery', $item->product->product_galleries->first()->image) : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN88B8AAsUB4ZtvXtIAAAAASUVORK5CYII=' }}"
+                                        alt="{{ $item->name }}"
+                                        class="w-full h-full object-cover object-center rounded-xl" />
                                 </div>
                             </div>
                             <div class="px-4 w-auto flex-1 md:w-5/12">
@@ -77,10 +78,14 @@
                             </div>
                             <div class="px-4 w-2/12">
                                 <div class="text-center">
-                                    <button data-delete-item="1"
-                                        class="text-red-600 border-none focus:outline-none px-3 py-1">
-                                        X
-                                    </button>
+                                    <form action="{{ route('delete.cart', $item->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="text-red-600 border-none focus:outline-none px-3 py-1">
+                                            X
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +100,9 @@
                 </div>
                 <div class="w-full md:px-4 md:w-4/12" id="shipping-detail">
                     <div class="bg-gray-100 px-4 py-6 md:p-8 md:rounded-3xl">
-                        <form action="success.html">
+                        <form action="{{ route('checkout') }}" method="POST">
+                            @csrf
+                            @method('post')
                             <div class="flex flex-start mb-6">
                                 <h3 class="text-2xl">Shipping Details</h3>
                             </div>
@@ -104,44 +111,44 @@
                                 <label for="complete-name" class="text-sm mb-2">Complete Name</label>
                                 <input data-input type="text" id="complete-name"
                                     class="border-gray-200 border rounded-lg px-4 py-2 bg-white text-sm focus:border-blue-200 focus:outline-none"
-                                    placeholder="Input your name" />
+                                    placeholder="Input your name" name="name" />
                             </div>
 
                             <div class="flex flex-col mb-4">
                                 <label for="email" class="text-sm mb-2">Email Address</label>
                                 <input data-input type="email" id="email"
                                     class="border-gray-200 border rounded-lg px-4 py-2 bg-white text-sm focus:border-blue-200 focus:outline-none"
-                                    placeholder="Input your email address" />
+                                    placeholder="Input your email address" name="email" />
                             </div>
 
                             <div class="flex flex-col mb-4">
                                 <label for="address" class="text-sm mb-2">Address</label>
                                 <input data-input type="text" id="address"
                                     class="border-gray-200 border rounded-lg px-4 py-2 bg-white text-sm focus:border-blue-200 focus:outline-none"
-                                    placeholder="Input your address" />
+                                    placeholder="Input your address" name="address" />
                             </div>
 
                             <div class="flex flex-col mb-4">
                                 <label for="phone-number" class="text-sm mb-2">Phone Number</label>
                                 <input data-input type="tel" id="phone-number"
                                     class="border-gray-200 border rounded-lg px-4 py-2 bg-white text-sm focus:border-blue-200 focus:outline-none"
-                                    placeholder="Input your phone number" />
+                                    placeholder="Input your phone number" name="phone" />
                             </div>
 
                             <div class="flex flex-col mb-4">
                                 <label for="complete-name" class="text-sm mb-2">Choose Courier</label>
                                 <div class="flex -mx-2 flex-wrap">
                                     <div class="px-2 w-6/12 h-24 mb-4">
-                                        <button type="button" data-value="fedex" data-name="courier"
+                                        <button type="button" data-value="fedex" data-name="courier" name="courier"
                                             class="border border-gray-200 focus:border-red-200 flex items-center justify-center rounded-xl bg-white w-full h-full focus:outline-none">
-                                            <img src="./images/content/logo-fedex.svg" alt="Logo Fedex"
-                                                class="object-contain max-h-full" />
+                                            <img src="{{ asset('frontend/images/content/logo-fedex.svg') }}"
+                                                alt="Logo Fedex" class="object-contain max-h-full" />
                                         </button>
                                     </div>
                                     <div class="px-2 w-6/12 h-24 mb-4">
-                                        <button type="button" data-value="dhl" data-name="courier"
+                                        <button type="button" data-value="dhl" data-name="courier" name="courier"
                                             class="border border-gray-200 focus:border-red-200 flex items-center justify-center rounded-xl bg-white w-full h-full focus:outline-none">
-                                            <img src="./images/content/logo-dhl.svg" alt="Logo dhl"
+                                            <img src="{{ asset('frontend/images/content/logo-dhl.svg') }}" alt="Logo dhl"
                                                 class="object-contain max-h-full" />
                                         </button>
                                     </div>
@@ -152,29 +159,32 @@
                                 <label for="complete-name" class="text-sm mb-2">Choose Payment</label>
                                 <div class="flex -mx-2 flex-wrap">
                                     <div class="px-2 w-6/12 h-24 mb-4">
-                                        <button type="button" data-value="midtrans" data-name="payment"
+                                        <button type="button" data-value="midtrans" data-name="payment" name="payment"
                                             class="border border-gray-200 focus:border-red-200 flex items-center justify-center rounded-xl bg-white w-full h-full focus:outline-none">
-                                            <img src="./images/content/logo-midtrans.png" alt="Logo midtrans"
-                                                class="object-contain max-h-full" />
+                                            <img src="{{ asset('frontend/images/content/logo-midtrans.png') }}"
+                                                alt="Logo midtrans" class="object-contain max-h-full" />
                                         </button>
                                     </div>
                                     <div class="px-2 w-6/12 h-24 mb-4">
                                         <button type="button" data-value="mastercard" data-name="payment"
+                                            name="payment"
                                             class="border border-gray-200 focus:border-red-200 flex items-center justify-center rounded-xl bg-white w-full h-full focus:outline-none">
-                                            <img src="./images/content/logo-mastercard.svg" alt="Logo mastercard" />
+                                            <img src="{{ asset('frontend/images/content/logo-mastercard.svg') }}"
+                                                alt="Logo mastercard" />
                                         </button>
                                     </div>
                                     <div class="px-2 w-6/12 h-24 mb-4">
-                                        <button type="button" data-value="bitcoin" data-name="payment"
+                                        <button type="button" data-value="bitcoin" data-name="payment" name="payment"
                                             class="border border-gray-200 focus:border-red-200 flex items-center justify-center rounded-xl bg-white w-full h-full focus:outline-none">
-                                            <img src="./images/content/logo-bitcoin.svg" alt="Logo bitcoin"
-                                                class="object-contain max-h-full" />
+                                            <img src="{{ asset('frontend/images/content/logo-bitcoin.svg') }}"
+                                                alt="Logo bitcoin" class="object-contain max-h-full" />
                                         </button>
                                     </div>
                                     <div class="px-2 w-6/12 h-24 mb-4">
                                         <button type="button" data-value="american-express" data-name="payment"
+                                            name="payment"
                                             class="border border-gray-200 focus:border-red-200 flex items-center justify-center rounded-xl bg-white w-full h-full focus:outline-none">
-                                            <img src="./images/content/logo-american-express.svg"
+                                            <img src="{{ asset('frontend/images/content/logo-american-express.svg') }}"
                                                 alt="Logo american-logo-american-express" />
                                         </button>
                                     </div>
@@ -192,5 +202,13 @@
             </div>
         </div>
     </section>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
     <!-- END: COMPLETE YOUR ROOM -->
 @endsection

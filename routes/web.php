@@ -17,6 +17,8 @@ Auth::routes();
 Route::middleware('auth')->group(function() {
     Route::get('/cart', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'cart'])->name('cart');
     Route::post('/add-to-cart/{id}', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'addToCart'])->name('add.cart');
+    Route::delete('/cart/delete/{id}', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'deleteCart'])->name('delete.cart');
+    Route::post('/checkout', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'checkOut'])->name('checkout');
 });
 
 Route::name('admin.')->prefix('admin')->middleware('admin')->group(function () {
