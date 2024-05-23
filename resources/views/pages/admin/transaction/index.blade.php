@@ -10,13 +10,8 @@
 
             <nav>
                 <ol class="breadcrumb">
-                    @if (Auth::user()->role == 'admin')
-                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                    @else
-                        <li class="breadcrumb-item"><a href="{{ route('user.dashboard') }}">Dashboard</a></li>
-                    @endif
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="#">Transaction</a></li>
-                    <li class="breadcrumb-item active">My Transaction</li>
                 </ol>
             </nav>
         </div>
@@ -31,49 +26,46 @@
                     <tr>
                         <th>No</th>
                         <th>Name Account</th>
-                        <th>Name</th>
+                        <th>Receiver Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Status</th>
                         <th>Total Price</th>
+                        <th>Payment URL</th>
+                        <th>Status</th>
                         <th>Action</th>
-                        <th>Detail</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($myTransaction as $row)
+                    @forelse ($transaction as $row)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ auth()->user()->name }}</td>
                             <td>{{ $row->user->name }}</td>
+                            <td>{{ $row->name }}</td>
                             <td>{{ $row->user->email }}</td>
                             <td>{{ $row->phone }}</td>
+                            <td>{{ $row->total_price }}</td>
                             <td>
-                                @if ($row->status == 'Expired')
-                                    <span class="badge bg-danger text-uppercase">Expired</span>
-                                @elseif ($row->status == 'PENDING')
-                                    <span class="badge bg-warning text-uppercase">Pending</span>
-                                @elseif ($row->status == 'SETTLEMENT')
-                                    <span class="badge bg-info text-uppercase">Settlement</span>
+                                @if ($row->payment_url == 'NULL')
                                 @else
-                                    <span class="badge bg-success text-uppercase">Success</span>
+                                    <a href="{{ $row->payment_url }}">MIDTRANS</a>
                                 @endif
                             </td>
-                            <td>{{ $row->total_price }}</td>
+                            <td>
+                                @if ($row->status == 'Expired')
+                                    <span class="badge bg-danger">Expired</span>
+                                @elseif ($row->status == 'Pending')
+                                    <span class="badge bg-warning">Pending</span>
+                                @elseif ($row->status == 'SETTLEMENT')
+                                    <span class="badge bg-info">Settlement</span>
+                                @else
+                                    <span class="badge bg-success">Success</span>
+                                @endif
+                            </td>
                             <td>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#showTransaction{{ $row->id }}">
                                     <i class="bi bi-eye"></i>
                                 </button>
-                            </td>
-                            <td>
-                                @if (Auth::user()->role == 'admin')
-                                    <a href="{{ route('admin.my-transaction.show', $row->id) }}"
-                                        class="btn btn-primary">Show</a>
-                                @else
-                                    <a href="{{ route('user.my-transaction.show', $row->id) }}"
-                                        class="btn btn-primary">Show</a>
-                                @endif
                             </td>
                         </tr>
                         @include('pages.admin.my-transaction.modal-show')

@@ -3,20 +3,23 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a class="nav-link " href="/user/dashboard">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#transaction-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Components</span><i
-                    class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link {{ request()->routeIs('user.my-transaction.*') ? '' : 'collapsed' }}"
+                data-bs-target="#transaction-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i><span>Transaction</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="transaction-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="transaction-nav"
+                class="nav-content collapse {{ request()->routeIs('user.my-transaction.*') ? 'show' : '' }}"
+                data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="components-alerts.html">
+                    <a href="{{ route('user.my-transaction.index') }}"
+                        class="{{ request()->routeIs('user.my-transaction.*') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>My Transaction</span>
                     </a>
                 </li>
@@ -38,7 +41,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.product.index') }}" class="{{ request()->routeIs('admin.product.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.product.index') }}"
+                        class="{{ request()->routeIs('admin.product.*') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>Product</span>
                     </a>
                 </li>
