@@ -49,11 +49,11 @@
                             <td>{{ $row->user->email }}</td>
                             <td>{{ $row->phone }}</td>
                             <td>
-                                @if ($row->status == 'Expired')
+                                @if ($row->status == 'expired')
                                     <span class="badge bg-danger text-uppercase">Expired</span>
-                                @elseif ($row->status == 'PENDING')
+                                @elseif ($row->status == 'pending')
                                     <span class="badge bg-warning text-uppercase">Pending</span>
-                                @elseif ($row->status == 'SETTLEMENT')
+                                @elseif ($row->status == 'settlement')
                                     <span class="badge bg-info text-uppercase">Settlement</span>
                                 @else
                                     <span class="badge bg-success text-uppercase">Success</span>

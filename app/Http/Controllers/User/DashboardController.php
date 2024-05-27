@@ -3,16 +3,24 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
-    public function index() {
-        return view('pages.user.index');
+    public function index()
+    {
+        $userTransaction = Transaction::where('user_id', auth()->user()->id)->get();
+        $pending = $userTransaction->where('status', 'pending')->count();
+        $settlement = $userTransaction->where('status', 'settlement')->count();
+        $expired = $userTransaction->where('status', 'expired')->count();
+
+        return view('pages.user.index', compact('pending', 'settlement', 'expired'));
     }
 
-    public function changePassword(Request $request) {
+    public function changePassword(Request $request)
+    {
         $this->validate($request, [
             'old_password' => 'required',
             'password' => 'required',

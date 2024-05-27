@@ -21,7 +21,8 @@
                             <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
                         </div>
                         <div class="mt-2">
-                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#changePassword" type="button">
+                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#changePassword"
+                                type="button">
                                 Change Password
                             </button>
                         </div>
@@ -29,6 +30,58 @@
                     </div>
                 </div>
 
+                <div class="section dashboard">
+                    <div class="row">
+                        <div class="col-xxl-4 col-md-6">
+                            <div class="card info-card sales-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pending <span>| Total</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="ri ri-home-smile-line"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{ $pending }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-md-6">
+                            <div class="card info-card sales-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Settlement <span>| Total</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="ri ri-home-smile-line"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{ $settlement }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-md-6">
+                            <div class="card info-card sales-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Expired <span>| Total</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="ri ri-home-smile-line"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{ $expired }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

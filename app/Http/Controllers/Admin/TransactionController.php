@@ -13,7 +13,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transaction = Transaction::with('user')->select('id', 'user_id', 'name', 'email', 'phone', 'courier', 'total_price', 'payment', 'payment_url')->latest()->get();
+        $transaction = Transaction::with('user')->select('id', 'user_id', 'name', 'email', 'phone', 'courier', 'status','total_price', 'payment', 'payment_url')->latest()->get();
 
         return view('pages.admin.transaction.index', compact('transaction'));
     }
@@ -47,7 +47,7 @@ class TransactionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -55,7 +55,17 @@ class TransactionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $transaction = Transaction::findOrFail($id);
+
+        try {
+            $transaction->update([
+                'status' => $request->status
+            ]);
+
+            return redirect()->route('admin.transaction.index')->with('success', 'Success To Update Status');
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.transaction.index')->with('error', 'Failed To Update Status');
+        }
     }
 
     /**
