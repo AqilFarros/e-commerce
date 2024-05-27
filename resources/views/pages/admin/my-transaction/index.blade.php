@@ -45,7 +45,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ auth()->user()->name }}</td>
-                            <td>{{ $row->user->name }}</td>
+                            <td>{{ $row->name }}</td>
                             <td>{{ $row->user->email }}</td>
                             <td>{{ $row->phone }}</td>
                             <td>
@@ -68,10 +68,10 @@
                             </td>
                             <td>
                                 @if (Auth::user()->role == 'admin')
-                                    <a href="{{ route('admin.my-transaction.show', $row->id) }}"
+                                    <a href="{{ route('admin.my-transaction.showDataBySlugAndId', [$row->slug, $row->id]) }}"
                                         class="btn btn-primary">Show</a>
                                 @else
-                                    <a href="{{ route('user.my-transaction.show', $row->id) }}"
+                                    <a href="{{ route('user.my-transaction.showDataBySlugAndId', [$row->slug, $row->id]) }}"
                                         class="btn btn-primary">Show</a>
                                 @endif
                             </td>

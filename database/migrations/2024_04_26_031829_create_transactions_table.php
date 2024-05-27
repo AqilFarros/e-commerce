@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('slug');
             $table->string('name');
             $table->string('email');
             $table->string('phone');

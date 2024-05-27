@@ -40,9 +40,6 @@ class MyTransactionController extends Controller
      */
     public function show(string $id)
     {
-        $myTransaction = TransactionItem::with(['product'])->where('transaction_id', $id)->get();
-
-        return view('pages.admin.my-transaction.show', compact('myTransaction'));
     }
 
     /**
@@ -67,5 +64,12 @@ class MyTransactionController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function showDataBySlugAndId($slug, $id)
+    {
+        $transaction = Transaction::where('slug', $slug)->where('id', $id)->firstOrFail();
+
+        return view('pages.admin.my-transaction.show', compact('transaction'));
     }
 }
