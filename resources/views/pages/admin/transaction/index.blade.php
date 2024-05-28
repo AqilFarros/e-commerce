@@ -11,7 +11,7 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="#">Transaction</a></li>
+                    <li class="breadcrumb-item active">Transaction</li>
                 </ol>
             </nav>
         </div>
@@ -62,7 +62,7 @@
                                 @endif
                             </td>
                             <td>
-                                    <a href="#" class="btn btn-primary btn-sm mx-2">Show</a>
+                                    <a href="{{ route('admin.transaction.showDataByAdmin', [$row->slug, $row->id]) }}" class="btn btn-primary btn-sm mx-2">Show</a>
                                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#updateStatus{{ $row->id }}">
                                     Edit

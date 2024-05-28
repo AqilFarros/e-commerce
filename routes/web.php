@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MyTransactionController;
 use App\Http\Controllers\Admin\ProductGalleryController;
 use App\Http\Controllers\Admin\TransactionController;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'index']);
 Route::get('/detail-product/{slug}', [\App\Http\Controllers\FrontEnd\FrontEndController::class, 'detailProduct'])->name('detail.product');
@@ -33,6 +34,7 @@ Route::name('admin.')->prefix('admin')->middleware('admin')->group(function () {
         Route::get('/index', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('index');
         Route::put('reset-password/{id}', [\App\Http\Controllers\Admin\UserController::class, 'resetPassword'])->name('reset-password');
     });
+    Route::get('/transaction/{slug}/{id}', [TransactionController::class, 'showDataByAdmin'])->name('transaction.showDataByAdmin');
 });
 
 Route::name('user.')->prefix('user')->middleware('user')->group(function () {
@@ -43,3 +45,11 @@ Route::name('user.')->prefix('user')->middleware('user')->group(function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/artisan-call', function() {
+    Artisan::call('storage-link');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+
+    return 'success';
+});
